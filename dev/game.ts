@@ -1,27 +1,44 @@
 class Game {
+    private static instance: Game;
     
-    private breakfast:Breakfast;
-    private gandalf1:Gandalf;
-    private gandalf2:Gandalf;
-    private ork1:Ork;
-    private ork2:Ork;
+    public breakfast:Breakfast;
+    private gandalfAmount:number;
+    private orcAmount:number;
+    private gameObjects = new Array<GameObject>();
 
     constructor() { 
         this.breakfast = new Breakfast();
-        this.gandalf1 = new Gandalf();
-        this.gandalf2 = new Gandalf();
-        this.ork1 = new Ork();
-        this.ork2 = new Ork();
+
+        //maak een random aantal gandalfs aan
+        this.gandalfAmount = Math.floor(Math.random() * 8) + 1;
+        for (let g = 0; g < this.gandalfAmount; g++){
+            this.gameObjects.push(new Gandalf());
+        }
+
+        //maak een random aantal orcs aan
+        this.orcAmount = Math.floor(Math.random() * 8) + 1;
+        for (let o = 0; o < this.orcAmount; o++){
+            this.gameObjects.push(new Ork());
+        }
+
         requestAnimationFrame(() => this.gameLoop());
+    }
+
+    //Singleton
+    public static getInstance() {
+        if (! Game.instance) {
+        Game.instance = new Game();
+        }
+        return Game.instance;
     }
     
     private gameLoop(){
         this.breakfast.update();
         
-        this.gandalf1.update();
-        this.gandalf2.update();
-        this.ork1.update();
-        this.ork2.update();
+        //update gameobjects
+        for (let i = 0;i < this.gameObjects.length;i++){
+            this.gameObjects[i].update();
+        }
 
         requestAnimationFrame(() => this.gameLoop());
     }

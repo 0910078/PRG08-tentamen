@@ -1,4 +1,7 @@
-class Ork {
+/// <reference path="gameObject.ts" />
+
+
+class Ork extends GameObject {
 
     public xspeed:number = 0;
     public yspeed:number = 0;
@@ -15,10 +18,9 @@ class Ork {
     private tag:string;
         
     constructor() {
+        super();
 
         this.tag = "ork";
-        this.width = 67;
-        this.height = 119;
         this.x = Math.random() * (window.innerWidth - 67);
         this.y = Math.random() * (window.innerHeight - 110);
         this.speedmultiplier = Math.random() + 1;
@@ -48,13 +50,13 @@ class Ork {
     }
 
     // een random plek in het scherm
-    private setTarget(){
+    public setTarget(){
         this.xTarget = Math.random() * (window.innerWidth-80);
         this.yTarget = Math.random() * (window.innerHeight-120);
     }
 
     // snelheid uitrekenen
-    private setSpeed(xdist:number, ydist:number):void {
+    public setSpeed(xdist:number, ydist:number):void {
         let distance:number = Math.sqrt(xdist * xdist + ydist * ydist);
         this.xspeed = xdist/distance;
         this.yspeed = ydist/distance;
